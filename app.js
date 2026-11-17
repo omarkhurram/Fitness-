@@ -1,7 +1,7 @@
 (function(){
 'use strict';
 var $=function(id){return document.getElementById(id)}, esc=function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
-.exercise-demo{margin:10px 0 14px;padding:10px;border:1px solid #344663;border-radius:10px;background:#0b1423}.demo-heading{font-weight:700;margin-bottom:8px;color:#dbeafe}.exercise-demo video{display:block;width:100%;max-height:320px;object-fit:contain;background:#050a12;border-radius:8px}.exercise-demo .small{margin:7px 0 0}
+var demoStyle=document.createElement('style');demoStyle.textContent=".exercise-demo{margin:10px 0 14px;padding:10px;border:1px solid #344663;border-radius:10px;background:#0b1423}.demo-heading{font-weight:700;margin-bottom:8px;color:#dbeafe}.exercise-demo video{display:block;width:100%;max-height:320px;object-fit:contain;background:#050a12;border-radius:8px}.exercise-demo .small{margin:7px 0 0}\n";document.head.appendChild(demoStyle);
 var originalDraw=draw;
 state.settings=state.settings||{calorieTarget:2300,proteinTarget:130};
 /* Use the Smith variation for the higher-rep hypertrophy chest day. */
