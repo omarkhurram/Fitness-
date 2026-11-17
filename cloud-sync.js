@@ -5,10 +5,10 @@ let supa=null,user=null,ready=false,busy=false,queued=false,restoring=false;
 const el=id=>document.getElementById(id);
 function say(message){const n=el('cloudStatus');if(n)n.textContent=message}
 function readConfig(){try{return JSON.parse(localStorage.getItem(CONFIG_KEY)||'{}')}catch(e){return {}}}
-function uniqueMerge(remote,local){const out=[],seen=new Set();(Array.isArray(remote)?remote:[]).concat(Array.isArray(local)?local:[]).forEach(item=>{const key=JSON.stringify(item);if(!seen.has(key)){seen.add(key);out.push(item)}});return out}
+function mergeArray(remote,local){const base=Array.isArray(remote)?remote:[],incoming=Array.isArray(local)?local:[],out=base.slice(),counts=new Map();base.forEach(item=>{const key=JSON.stringify(item);counts.set(key,(counts.get(key)||0)+1)});const used=new Map();incoming.forEach(item=>{const key=JSON.stringify(item),n=(used.get(key)||0)+1;used.set(key,n);if(n>(counts.get(key)||0))out.push(item)});return out}
 function merge(local,remote){
  const out=Object.assign({},remote||{},local||{});
- ['logs','measures','recovery','nutrition','activities','waist'].forEach(k=>{if(Array.isArray((remote||{})[k])||Array.isArray((local||{})[k]))out[k]=uniqueMerge((remote||{})[k],(local||{})[k])});
+ ['logs','measures','recovery','nutrition','activities','waist'].forEach(k=>{if(Array.isArray((remote||{})[k])||Array.isArray((local||{})[k]))out[k]=mergeArray((remote||{})[k],(local||{})[k])});
  out.done=Object.assign({},(remote||{}).done||{},(local||{}).done||{});
  out.warmChecks=Object.assign({},(remote||{}).warmChecks||{},(local||{}).warmChecks||{});
  out.settings=Object.assign({},(remote||{}).settings||{},(local||{}).settings||{});
