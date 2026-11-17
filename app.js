@@ -10,11 +10,11 @@ days.A.items[1][0]='Chest-supported machine row';
 days.C.items[3][0]='Incline DB curl (hammer up, supinated down)';
 days.T.items.push(['Farmer carry',2,30,45,'seconds']);
 var warm={
- A:['3 min easy cardio','Shoulder circles + band external rotations: 10 each','Bench ramp-up: empty bar × 10, then 1–2 gradual sets'],
- B:['3 min easy cardio','Scapular pulls or active hang: 6–8 reps','Light pulldown or row: 1 easy set'],
- L:['3 min easy bike or walk','Leg swings + ankle rocks: 10 each','2–3 progressive practice jumps before working jumps'],
- C:['3 min easy cardio','Wall slides + band pull-aparts: 10 each','1 easy ramp-up set for the first press'],
- T:['2 min easy movement','Light lateral raise + reverse fly: 10 each','One easy practice set for the first tune-up movement']
+ A:['3–4 min easy treadmill walk or bike; gradually raise pace until warm','8–10 controlled arm circles each way, 8 scapular push-ups, then 6–8 unloaded shoulder-blade retractions','First press: 2–4 relaxed ramp-up sets, gradually increasing load; add 1 light row rehearsal set if needed'],
+ B:['3–4 min easy treadmill walk or bike','6–8 controlled scapular pull-ups or active-hang shoulder depressions, then 6–8 slow thoracic rotations','First vertical pull: 2–3 easy ramp-up sets; use assistance/light load and keep every rep smooth'],
+ L:['4–5 min easy bike or treadmill walk','8 leg swings each direction per leg, 8 ankle rocks per side, 8 bodyweight squats and 6 unloaded hip hinges','Practice 2–3 submaximal jumps with full reset; then ramp the first loaded leg exercise with 2–3 easy sets'],
+ C:['3–4 min easy treadmill walk or bike','8–10 slow arm circles each way, 8 wall slides, then 6–8 controlled scapular push-ups','First press: 2–4 gradual ramp-up sets; use one light rehearsal set for the next unfamiliar upper-body movement if needed'],
+ T:['2–3 min easy walk or bike','8 controlled shoulder circles each way, 8 gentle shoulder-blade squeezes, and 10 wrist open/close movements','One light rehearsal set for the first movement, then start; add a second only if the first working load is a large jump']
 };
 
 var formGuides={
