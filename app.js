@@ -101,7 +101,7 @@ function bindExtra(){
  $('saveRecovery').onclick=function(){state.recovery.push({date:today(),sleep:+$('rSleep').value,energy:+$('rEnergy').value,sore:+$('rSore').value,motivation:+$('rMotivation').value,notes:$('rNotes').value});save();drawExtra()};
  $('addMeal').onclick=function(){if(!$('mealName').value||$('mealCal').value===''||$('mealPro').value===''){alert('Enter meal, calories and protein.');return}state.nutrition.push({date:today(),name:$('mealName').value,cal:+$('mealCal').value,pro:+$('mealPro').value});save();$('mealName').value='';$('mealCal').value='';$('mealPro').value='';drawExtra()};
  $('addActivity').onclick=function(){if(+$('activityMinutes').value<=0){alert('Enter activity duration in minutes.');return}state.activities.push({date:today(),type:$('activityType').value,minutes:+$('activityMinutes').value,intensity:$('activityIntensity').value,notes:$('activityNotes').value});save();$('activityMinutes').value='';$('activityNotes').value='';drawExtra()};
- ['calTarget','proTarget'].forEach(function(id){$(id).onchange=drawExtra});
+  $('calTarget').onchange=function(){state.settings.calorieTarget=+$('calTarget').value;save();drawExtra()}; $('proTarget').onchange=function(){state.settings.proteinTarget=+$('proTarget').value;save();drawExtra()};
 }
 addTabs();$('calTarget').value=state.settings.calorieTarget;$('proTarget').value=state.settings.proteinTarget;bindExtra();drawExtra();updateVolume();
 var oldDrawProgress=drawProgress;drawProgress=function(){oldDrawProgress();updateVolume()};
