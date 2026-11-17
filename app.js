@@ -52,7 +52,7 @@ var formGuides={
 var demoVideos={
  'Bench press':'barbell-bench-press',
  'Bench press (volume)':'barbell-bench-press',
- 'Smith-machine bench press':'barbell-bench-press',
+ 'Smith-machine bench press':null,
  'Chest-supported row':'cable-straight-back-seated-row-v-grip',
  'Chest-supported machine row':null,
  'Incline dumbbell press':'dumbbell-incline-bench-press',
