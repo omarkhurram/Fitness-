@@ -1,7 +1,7 @@
 (function(){
 'use strict';
 const DATA_KEY='trainingHQStandalone_v1',CONFIG_KEY='trainingHQCloudConfig_v1';
-let supa=null,user=null,ready=false,busy=false,queued=false;
+let supa=null,user=null,ready=false,busy=false,queued=false,restoring=false;
 const el=id=>document.getElementById(id);
 function say(message){const n=el('cloudStatus');if(n)n.textContent=message}
 function readConfig(){try{return JSON.parse(localStorage.getItem(CONFIG_KEY)||'{}')}catch(e){return {}}}
@@ -20,24 +20,30 @@ async function upload(){
  if(busy){queued=true;return}
  busy=true;queued=false;
  try{
-  const {error}=await supa.from('training_hq_data').upsert({user_id:user.id,payload:getLocal(),updated_at:new Date().toISOString()},{onConflict:'user_id'});
+  const {data:remote,error:readError}=await supa.from('training_hq_data').select('payload').eq('user_id',user.id).maybeSingle();
+  if(readError)throw readError;
+  const merged=remote?merge(getLocal(),remote.payload||{}):getLocal();
+  localStorage.setItem(DATA_KEY,JSON.stringify(merged));
+  const {error}=await supa.from('training_hq_data').upsert({user_id:user.id,payload:merged,updated_at:new Date().toISOString()},{onConflict:'user_id'});
   if(error)throw error;
   say('Cloud synced · '+new Date().toLocaleTimeString([],{hour:'numeric',minute:'2-digit'}));
  }catch(e){say('Sync issue: '+e.message+' · Your device copy is still saved.')}
  finally{busy=false;if(queued){queued=false;setTimeout(upload,250)}}
 }
 async function restoreAndMerge(){
- ready=false;say('Checking your cloud history…');
+ if(restoring)return;restoring=true;ready=false;say('Checking your cloud history…');
  try{
   const {data,error}=await supa.from('training_hq_data').select('payload,updated_at').eq('user_id',user.id).maybeSingle();
   if(error)throw error;
   const local=getLocal();
   const combined=data?merge(local,data.payload||{}):local;
   localStorage.setItem(DATA_KEY,JSON.stringify(combined));
-  if(typeof window.trainingHQRefresh==='function')window.trainingHQRefresh();
+  state=combined;
+  if(typeof draw==='function')draw();
   ready=true;
   await upload();
  }catch(e){say('Could not sync: '+e.message+' · Local records were not changed.');ready=false}
+ finally{restoring=false}
 }
 function ui(){
  const host=el('cloudSyncMount');if(!host)return;
