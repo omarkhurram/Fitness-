@@ -1,6 +1,7 @@
 (function(){
 'use strict';
 var $=function(id){return document.getElementById(id)}, esc=function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
+.exercise-demo{margin:10px 0 14px;padding:10px;border:1px solid #344663;border-radius:10px;background:#0b1423}.demo-heading{font-weight:700;margin-bottom:8px;color:#dbeafe}.exercise-demo video{display:block;width:100%;max-height:320px;object-fit:contain;background:#050a12;border-radius:8px}.exercise-demo .small{margin:7px 0 0}
 var originalDraw=draw;
 state.settings=state.settings||{calorieTarget:2300,proteinTarget:130};
 /* Use the Smith variation for the higher-rep hypertrophy chest day. */
@@ -49,9 +50,43 @@ function movementGraphic(type){
  var d=paths[type]||paths.press;
  return '<svg viewBox="0 0 100 72" role="img" aria-label="Illustrative movement path"><path d="M8 58 H92" stroke="#64748b" stroke-width="1" stroke-dasharray="3 3" fill="none"/><path d="'+d+'" stroke="#8ab4ff" stroke-width="4" fill="none" stroke-linecap="round" class="motion-path"/><circle cx="18" cy="'+(type==='jump'||type==='squat'||type==='hinge'?'18':'43')+'" r="5" fill="#dbeafe"/><circle cx="82" cy="'+(type==='jump'||type==='squat'||type==='hinge'?'18':'43')+'" r="5" fill="#dbeafe"/><path d="M77 36 L84 43 L75 48" stroke="#8ab4ff" stroke-width="2" fill="none"/></svg>';
 }
+var demoVideos={
+ 'Bench press':'barbell-bench-press',
+ 'Bench press (volume)':'barbell-bench-press',
+ 'Smith-machine bench press':'barbell-bench-press',
+ 'Chest-supported row':'cable-straight-back-seated-row-v-grip',
+ 'Incline dumbbell press':'dumbbell-incline-bench-press',
+ 'Cable lateral raise':'cable-lateral-raise',
+ 'EZ-bar preacher curl':'lever-preacher-curl',
+ 'Pull-up / assisted pull-up':'band-assisted-pull-up',
+ 'Seated cable row':'cable-straight-back-seated-row-v-grip',
+ 'Machine shoulder press':'dumbbell-alternate-shoulder-press',
+ 'Reverse pec deck':'lever-seated-reverse-fly',
+ 'Rope triceps pushdown':'cable-pushdown-rope-attachment',
+ 'Smith-machine squat':'classic-barbell-squat',
+ 'Standing calf raise':'lever-standing-calf-raise',
+ 'Hanging knee raise':'hanging-leg-hip-raise',
+ 'Kneeling cable crunch':'cable-kneeling-crunch',
+ 'Lat pulldown':'cable-pulldown',
+ 'Pec deck fly':'lever-pec-deck-fly',
+ 'Overhead cable triceps extension':'cable-rope-high-pulley-overhead-triceps-extension',
+ 'Dumbbell shrugs':'dumbbell-shrug',
+ 'Hammer curls':'dumbbell-cross-body-hammer-curl'
+};
+var demoLabels={
+ 'Smith-machine bench press':'Barbell bench demonstration · Smith-machine setup differs',
+ 'Chest-supported row':'Seated cable row demonstration · chest-supported machine setup differs',
+ 'Machine shoulder press':'Dumbbell shoulder press demonstration · machine setup differs',
+ 'Smith-machine squat':'Barbell squat demonstration · Smith-machine setup differs'
+};
+function demoVideo(name){
+ var slug=demoVideos[name];if(!slug)return '';
+ var url='https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/'+slug+'.mp4';
+ return '<div class="exercise-demo"><div class="demo-heading">Exercise demonstration</div><video controls muted loop playsinline preload="metadata" poster="https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-posters/male/'+slug+'.jpg"><source src="'+url+'" type="video/mp4">Your browser does not support video.</video><p class="small">'+esc(demoLabels[name]||'Looping movement demonstration. Compare the setup to your machine and follow the written cues below.')+'</p></div>';
+}
 function renderFormGuide(name){
  var g=formGuides[name];if(!g)return '';
- return '<details class="form-guide"><summary>Form guide · setup, ROM & execution</summary><div class="form-layout"><div class="form-graphic">'+movementGraphic(g.type)+'<div class="form-legend"><span>START</span><span>CONTROLLED MOTION</span><span>FINISH</span></div></div><div><b>1 · Setup</b><p>'+esc(g.setup)+'</p><b>2 · Rep execution</b><p>'+esc(g.steps)+'</p><b>3 · Key checkpoints</b><ul>'+g.cues.map(function(c){return '<li>'+esc(c)+'</li>'}).join('')+'</ul><b>Range of motion / stretch</b><p>'+esc(g.rom)+'</p><b>Common mistakes</b><p>'+esc(g.avoid)+'</p><p class="small">Technique guide, not individualized medical advice. Machine geometry and limb proportions vary. Stop for sharp pain, numbness or instability; ask a qualified coach to check unfamiliar/heavy lifts.</p></div></div></details>';
+ return '<details class="form-guide"><summary>Form guide · video, setup, ROM & execution</summary><div class="form-layout">'+demoVideo(name)+'<div class="form-graphic">'+movementGraphic(g.type)+'<div class="form-legend"><span>START</span><span>CONTROLLED MOTION</span><span>FINISH</span></div></div><div><b>1 · Setup</b><p>'+esc(g.setup)+'</p><b>2 · Rep execution</b><p>'+esc(g.steps)+'</p><b>3 · Key checkpoints</b><ul>'+g.cues.map(function(c){return '<li>'+esc(c)+'</li>'}).join('')+'</ul><b>Range of motion / stretch</b><p>'+esc(g.rom)+'</p><b>Common mistakes</b><p>'+esc(g.avoid)+'</p><p class="small">Technique guide, not individualized medical advice. Machine geometry and limb proportions vary. Stop for sharp pain, numbness or instability; ask a qualified coach to check unfamiliar/heavy lifts.</p></div></div></details>';
 }
 
 var specific={
