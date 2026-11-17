@@ -24,6 +24,7 @@ async function upload(){
   if(readError)throw readError;
   const merged=remote?merge(getLocal(),remote.payload||{}):getLocal();
   localStorage.setItem(DATA_KEY,JSON.stringify(merged));
+  state=merged;if(typeof draw==='function')draw();
   const {error}=await supa.from('training_hq_data').upsert({user_id:user.id,payload:merged,updated_at:new Date().toISOString()},{onConflict:'user_id'});
   if(error)throw error;
   say('Cloud synced · '+new Date().toLocaleTimeString([],{hour:'numeric',minute:'2-digit'}));
