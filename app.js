@@ -10,10 +10,10 @@ days.A.items[1][0]='Chest-supported machine row';
 days.C.items[3][0]='Incline DB curl (hammer up, supinated down)';
 days.T.items.push(['Farmer carry',2,30,45,'seconds']);
 var warm={
- A:['3–4 min easy treadmill walk or bike; gradually raise pace until warm','8–10 controlled arm circles each way, 8 scapular push-ups, then 6–8 unloaded shoulder-blade retractions','First press: 2 ramp-up sets for the first heavy press (empty bar, then ~50%); optional ~70% × 2–3 only if you feel you need it; add one light row feeler if needed'],
+ A:['3–4 min easy treadmill walk or bike; gradually raise pace until warm','8–10 controlled arm circles each way, 8 scapular push-ups, then 6–8 unloaded shoulder-blade retractions','First heavy press: exactly 2 ramp-up sets by default (empty bar, then ~50% of working weight). A ~70% × 2–3 primer is optional only if the jump to working weight feels too large.'],
  B:['3–4 min easy treadmill walk or bike','6–8 controlled scapular pull-ups or active-hang shoulder depressions, then 6–8 slow thoracic rotations','First vertical pull: two easy ramp-up sets; add a third only if the load jump calls for it'],
  L:['4–5 min easy bike or treadmill walk','8 leg swings each direction per leg, 8 ankle rocks per side, 8 bodyweight squats and 6 unloaded hip hinges','Practice 2–3 submaximal jumps with full reset; then ramp the first loaded leg exercise with two easy sets; add a third only if the load jump or how you feel calls for it'],
- C:['3–4 min easy treadmill walk or bike','8–10 slow arm circles each way, 8 wall slides, then 6–8 controlled scapular push-ups','First press: 2 ramp-up sets for the first bench press (empty bar, then ~50%); optional ~70% × 2–3 only if needed; use one light feeler for the next unfamiliar movement if necessary'],
+ C:['3–4 min easy treadmill walk or bike','8–10 slow arm circles each way, 8 wall slides, then 6–8 controlled scapular push-ups','First bench press: exactly 2 ramp-up sets by default (empty bar, then ~50% of working weight). A ~70% × 2–3 primer is optional only if the jump to working weight feels too large.'],
  T:['2–3 min easy walk or bike','8 controlled shoulder circles each way, 8 gentle shoulder-blade squeezes, and 10 wrist open/close movements','One light rehearsal set for the first movement, then start; add a second only if the first working load is a large jump']
 };
 
@@ -104,33 +104,33 @@ function renderFormGuide(name){
 }
 
 var specific={
- 'Bench press':['Empty bar × 8–10','~50% work weight × 5; optional ~70% × 2–3 only if you feel you need another primer'],
- 'Bench press (volume)':['Empty bar × 8–10','~50% work weight × 5; optional ~70% × 2–3 only if you feel you need another primer'],
- 'Smith-machine bench press':['Light Smith bar × 8–10','~50% work load × 5; optional ~70% × 2–3 if needed'],
+ 'Bench press':['Empty bar × 8–10','~50% work weight × 4–5; optional ~70% × 2 only if the jump to working weight feels too large'],
+ 'Bench press (volume)':['Empty bar × 8–10','~50% work weight × 4–5; no third set unless the jump to working weight feels unusually large'],
+ 'Smith-machine bench press':['Light Smith bar × 8–10','~50% work load × 4–5; optional ~70% × 2 only if the jump feels too large'],
  'Farmer carry':['One short, easy practice carry'],
- 'Chest-supported row':['Very light × 10; moderate × 5'],
- 'Chest-supported machine row':['Very light × 8–10','Moderate × 4–5 only if needed for a large load jump'],
- 'Incline DB curl (hammer up, supinated down)':['Very light DBs × 10; moderate DBs × 5'],
- 'Incline dumbbell press':['Light DBs × 8–10','Moderate DBs × 4–5 only if needed'],
+ 'Chest-supported row':['Very light × 8–10','~50% working load × 4–5'],
+ 'Chest-supported machine row':['Very light × 8–10','~50% working load × 4–5'],
+ 'Incline DB curl (hammer up, supinated down)':['Very light DBs × 8–10','~50% working load × 4–5'],
+ 'Incline dumbbell press':['Light DBs × 8–10','~50% working load × 4–5'],
  'Cable lateral raise':['One light feeler set × 10–12 each side'],
- 'EZ-bar preacher curl':['Light × 10; moderate × 4'],
+ 'EZ-bar preacher curl':['Light × 8–10','~50% working load × 4–5'],
  'Pull-up / assisted pull-up':['Scapular pulls × 5; easy assisted reps × 3–5'],
- 'Seated cable row':['One light feeler set × 8–12; add a second only if the first working load is a big jump'],
- 'Machine shoulder press':['Light × 8–10','Moderate × 4–5 only if needed'],
- 'Reverse pec deck':['One light feeler set × 10–12; skip if already warm'],
- 'Rope triceps pushdown':['Light × 12'],
- 'Smith-machine squat':['Empty/light bar × 8–10','~50% working load × 5; optional ~70% × 2–3 if needed'],
- 'Dumbbell Romanian deadlift':['Light DBs × 8','Moderate DBs × 4 only if needed'],
+ 'Seated cable row':['One light feeler set × 8–10','~50% working load × 4–5 if needed'],
+ 'Machine shoulder press':['Light × 8–10','~50% working load × 4–5'],
+ 'Reverse pec deck':['One light feeler set × 8–10; skip if already warm'],
+ 'Rope triceps pushdown':['One light feeler set × 8–10'],
+ 'Smith-machine squat':['Empty/light bar × 8–10','~50% working load × 4–5; optional ~70% × 2 only if the jump feels too large'],
+ 'Dumbbell Romanian deadlift':['Light DBs × 8','~50% working load × 4–5'],
  'Bulgarian split squat':['Bodyweight × 5 each leg'],
- 'Standing calf raise':['Light × 10'],
+ 'Standing calf raise':['One light feeler set × 8–10'],
  'Hanging knee raise':['Easy knee raises × 5 if needed'],
- 'Kneeling cable crunch':['Light × 10'],
- 'Lat pulldown':['One light feeler set × 8–12; add a second only if the first working load is a big jump'],
- 'Pec deck fly':['One light feeler set × 10–12'],
- 'Overhead cable triceps extension':['Light × 12'],
- 'Dumbbell shrugs':['Light × 10'],
- 'Hammer curls':['Light × 10'],
- 'Cable crunch (optional)':['Light × 10']
+ 'Kneeling cable crunch':['One light feeler set × 8–10'],
+ 'Lat pulldown':['One light feeler set × 8–10','~50% working load × 4–5 if needed'],
+ 'Pec deck fly':['One light feeler set × 8–10'],
+ 'Overhead cable triceps extension':['One light feeler set × 8–10'],
+ 'Dumbbell shrugs':['One light feeler set × 8–10'],
+ 'Hammer curls':['One light feeler set × 8–10'],
+ 'Cable crunch (optional)':['One light feeler set × 8–10']
 };
 state.warmChecks=state.warmChecks||{};state.recovery=state.recovery||[];state.nutrition=state.nutrition||[];state.activities=state.activities||[];state.waist=state.waist||[];
 function checked(k){return state.warmChecks[k]?'checked':''}
@@ -141,7 +141,7 @@ function enhanceWorkout(){
  html+='</div>'; if(day==='L') html+='<div class="card jump-note"><h3>Jump progression & measurement</h3><p class="small">Keep countermovement jumps, approach jumps and pogos: they train distinct qualities. Track countermovement-jump height with the same method and setup each time. Box jumps are optional, not a better jump-height test—box height can rise simply by tucking the knees more, so it can overstate progress. No box-jump substitution is programmed.</p></div>'; $('exercises').insertAdjacentHTML('afterbegin',html);
  document.querySelectorAll('[data-warmkey]').forEach(function(el){el.onchange=function(){state.warmChecks[el.dataset.warmkey]=el.checked;save()}});
  document.querySelectorAll('#exercises .exercise').forEach(function(card,i){
-  var title=card.querySelector('b');if(!title)return;var name=title.textContent,items=specific[name]||['One light acclimation set × 8–12; add another ramp-up set if the load jump is large'];
+  var title=card.querySelector('b');if(!title)return;var name=title.textContent,items=specific[name]||['One easy feeler set × 8–10; a second easy ramp-up set only if the working-load jump is substantial'];
   var block='<div class="exercise-warmups"><b>Warm-up / ramp-up sets · not logged as working sets</b><p class="small">Use these before the programmed working sets. Percentages are of your planned working weight. For heavy compounds, use two warm-up sets by default; the ~70% primer is optional, not mandatory. Keep warm-ups crisp and far from failure.</p><ol>'+items.map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ol></div>';
   card.insertAdjacentHTML('beforeend',block+renderFormGuide(name));
  });
