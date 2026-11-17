@@ -5,6 +5,7 @@ A local-first tracker for strength, hypertrophy, jumping, sport, recovery and nu
 ## Upgrade features
 - Daily global warm-up checklists embedded above the workout.
 - Exercise-specific ramp-up checklists embedded directly in each exercise card.
+- Expandable form guides for every programmed exercise, with original animated movement-path graphics, setup, execution, range-of-motion/stretch guidance, key cues and common mistakes. These are coaching diagrams, not exact anatomical demonstrations or a substitute for in-person form checks.
 - Warm-ups are never logged as working sets and do not count toward volume or progression.
 - Individual working-set logging with load, reps, RIR and set number.
 - Previous logged performance context and simple double-progression guidance.
