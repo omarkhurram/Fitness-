@@ -93,6 +93,23 @@ function drawExtra(){
  $('mealHistory').innerHTML=meals.map(function(x){return '<p class="small">'+esc(x.name)+' · '+x.cal+' kcal · '+x.pro+'g protein</p>'}).join('');
  $('activityHistory').innerHTML=state.activities.slice(-12).reverse().map(function(x){return '<p class="small">'+esc(x.date)+' · '+esc(x.type)+' · '+esc(x.minutes)+' min · '+esc(x.intensity)+'</p>'}).join('');
 }
+function addBodyCompAndPRs(){
+ var fields=document.querySelector('#progress .fields');
+ if(fields&&!$('waist')){
+  var lab=document.createElement('label');lab.textContent='Waist (in)';var inp=document.createElement('input');inp.id='waist';inp.type='number';inp.step='.1';lab.appendChild(inp);fields.appendChild(lab);
+ }
+ var guide=document.querySelector('#guide .card');
+ if(guide&&!$('hybridNotes')){var note=document.createElement('div');note.id='hybridNotes';note.innerHTML='<h3>Hybrid physique notes</h3><p class="small">The hypertrophy chest day uses the Smith machine for stable, controlled volume. Farmer carries are included in the optional tune-up alongside shrugs and hammer curls. Walking to the gym is useful low-intensity activity; log the actual duration under Hybrid activity.</p><p class="small">Forearm vascularity is influenced heavily by genetics and overall leanness. Farmer carries, hammer curls and occasional wrist flexion/extension can develop forearm musculature, but cannot guarantee visible veins. Avoid dehydration or extreme dieting. Neck work is optional and should be very light, controlled and pain-free; skip it if unsure.</p><p class="small">For visible abs, keep direct core work consistent and track waist/bodyweight trends. Two focused sessions per week is a reasonable starting point; daily ab training is not required.</p>';guide.appendChild(note)}
+}
+function drawPersonalRecords(){
+ var box=$('progressList');if(!box)return;
+ var prior=$('personalRecords');if(prior)prior.remove();
+ var grouped={};state.logs.filter(function(x){return !x.warmup&&x.unit==='lb'&&x.reps>0&&x.reps<=12}).forEach(function(x){var est=x.load*(1+x.reps/30);if(!grouped[x.name]||est>grouped[x.name].est)grouped[x.name]={est:est,entry:x}});
+ var names=Object.keys(grouped);if(!names.length)return;
+ var html='<div id="personalRecords" class="card"><h3>Best logged strength estimates</h3><p class="small">Estimated from logged working sets (Epley formula); use as trend markers, not tested maxes.</p>';
+ names.forEach(function(n){var x=grouped[n];html+='<p class="small">'+esc(n)+': <b>'+x.est.toFixed(1)+' lb estimated 1RM</b> · '+x.entry.load+' × '+x.entry.reps+'</p>'});
+ html+='</div>';box.appendChild(document.createRange().createContextualFragment(html));
+}
 function updateVolume(){
  var box=$('progressList');if(!box)return;var previous=$('weeklyVolume');if(previous)previous.remove();var groups={Chest:['bench','incline','pec deck'],Back:['row','pull','pulldown'],Shoulders:['lateral','shoulder','reverse'],Arms:['curl','triceps','hammer'],Legs:['squat','deadlift','split','calf'],Abs:['raise','crunch']},html='<div class="card"><h3>Weekly working-set volume (logged only)</h3>';
  Object.keys(groups).forEach(function(g){var n=state.logs.filter(function(x){return !x.warmup&&x.date>=week()&&groups[g].some(function(t){return x.name.toLowerCase().indexOf(t)>=0})}).length;html+='<p class="small">'+g+': <b>'+n+' logged sets</b></p>'});html+='</div>';box.insertAdjacentHTML('beforeend',html);
@@ -103,6 +120,6 @@ function bindExtra(){
  $('addActivity').onclick=function(){if(+$('activityMinutes').value<=0){alert('Enter activity duration in minutes.');return}state.activities.push({date:today(),type:$('activityType').value,minutes:+$('activityMinutes').value,intensity:$('activityIntensity').value,notes:$('activityNotes').value});save();$('activityMinutes').value='';$('activityNotes').value='';drawExtra()};
   $('calTarget').onchange=function(){state.settings.calorieTarget=+$('calTarget').value;save();drawExtra()}; $('proTarget').onchange=function(){state.settings.proteinTarget=+$('proTarget').value;save();drawExtra()};
 }
-addTabs();$('calTarget').value=state.settings.calorieTarget;$('proTarget').value=state.settings.proteinTarget;bindExtra();drawExtra();updateVolume();
-var oldDrawProgress=drawProgress;drawProgress=function(){oldDrawProgress();updateVolume()};
+addTabs();addBodyCompAndPRs();$('calTarget').value=state.settings.calorieTarget;$('proTarget').value=state.settings.proteinTarget;bindExtra();drawExtra();updateVolume();
+var oldDrawProgress=drawProgress;drawProgress=function(){oldDrawProgress();updateVolume();drawPersonalRecords()};
 })();
