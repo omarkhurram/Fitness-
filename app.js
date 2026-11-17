@@ -2,6 +2,10 @@
 'use strict';
 var $=function(id){return document.getElementById(id)}, esc=function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
 var originalDraw=draw;
+state.settings=state.settings||{calorieTarget:2300,proteinTarget:130};
+/* Use the Smith variation for the higher-rep hypertrophy chest day. */
+days.C.items[0][0]='Smith-machine bench press';
+days.T.items.push(['Farmer carry',2,30,45,'seconds']);
 var warm={
  A:['3–5 min easy walk, bike or row','Arm circles: 10 each direction','Scapular push-ups: 8–10','Light band pull-aparts: 10–15'],
  B:['3–5 min easy walk, bike or row','Arm circles: 10 each direction','Scapular push-ups: 8–10','Light band pull-aparts: 10–15'],
@@ -12,6 +16,8 @@ var warm={
 var specific={
  'Bench press':['Empty bar × 10','~50% work weight × 5','~70% × 3','~85% × 1–2'],
  'Bench press (volume)':['Empty bar × 10','~50% work weight × 5','~70% × 3'],
+ 'Smith-machine bench press':['Light Smith bar × 10; ~50% work load × 5; ~70% × 3'],
+ 'Farmer carry':['One short, easy practice carry'],
  'Chest-supported row':['Very light × 10; moderate × 5'],
  'Incline dumbbell press':['Light DBs × 10; moderate × 4–5'],
  'Cable lateral raise':['Light × 12 each side'],
@@ -88,7 +94,7 @@ function drawExtra(){
  $('activityHistory').innerHTML=state.activities.slice(-12).reverse().map(function(x){return '<p class="small">'+esc(x.date)+' · '+esc(x.type)+' · '+esc(x.minutes)+' min · '+esc(x.intensity)+'</p>'}).join('');
 }
 function updateVolume(){
- var box=$('progressList');if(!box)return;var groups={Chest:['bench','incline','pec deck'],Back:['row','pull','pulldown'],Shoulders:['lateral','shoulder','reverse'],Arms:['curl','triceps','hammer'],Legs:['squat','deadlift','split','calf'],Abs:['raise','crunch']},html='<div class="card"><h3>Weekly working-set volume (logged only)</h3>';
+ var box=$('progressList');if(!box)return;var previous=$('weeklyVolume');if(previous)previous.remove();var groups={Chest:['bench','incline','pec deck'],Back:['row','pull','pulldown'],Shoulders:['lateral','shoulder','reverse'],Arms:['curl','triceps','hammer'],Legs:['squat','deadlift','split','calf'],Abs:['raise','crunch']},html='<div class="card"><h3>Weekly working-set volume (logged only)</h3>';
  Object.keys(groups).forEach(function(g){var n=state.logs.filter(function(x){return !x.warmup&&x.date>=week()&&groups[g].some(function(t){return x.name.toLowerCase().indexOf(t)>=0})}).length;html+='<p class="small">'+g+': <b>'+n+' logged sets</b></p>'});html+='</div>';box.insertAdjacentHTML('beforeend',html);
 }
 function bindExtra(){
@@ -97,6 +103,6 @@ function bindExtra(){
  $('addActivity').onclick=function(){if(+$('activityMinutes').value<=0){alert('Enter activity duration in minutes.');return}state.activities.push({date:today(),type:$('activityType').value,minutes:+$('activityMinutes').value,intensity:$('activityIntensity').value,notes:$('activityNotes').value});save();$('activityMinutes').value='';$('activityNotes').value='';drawExtra()};
  ['calTarget','proTarget'].forEach(function(id){$(id).onchange=drawExtra});
 }
-addTabs();bindExtra();drawExtra();updateVolume();
+addTabs();$('calTarget').value=state.settings.calorieTarget;$('proTarget').value=state.settings.proteinTarget;bindExtra();drawExtra();updateVolume();
 var oldDrawProgress=drawProgress;drawProgress=function(){oldDrawProgress();updateVolume()};
 })();
