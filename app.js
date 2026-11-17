@@ -122,5 +122,5 @@ function bindExtra(){
   $('calTarget').onchange=function(){state.settings.calorieTarget=+$('calTarget').value;save();drawExtra()}; $('proTarget').onchange=function(){state.settings.proteinTarget=+$('proTarget').value;save();drawExtra()};
 }
 addTabs();addBodyCompAndPRs();$('calTarget').value=state.settings.calorieTarget;$('proTarget').value=state.settings.proteinTarget;bindExtra();drawExtra();updateVolume();
-var oldDrawProgress=drawProgress;drawProgress=function(){oldDrawProgress();updateVolume();drawPersonalRecords()};
+var oldDrawProgress=drawProgress;drawProgress=function(){oldDrawProgress();updateVolume();drawPersonalRecords()};drawPersonalRecords();
 })();
