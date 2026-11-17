@@ -147,8 +147,8 @@ function enhanceWorkout(){
  document.querySelectorAll('[data-warmkey]').forEach(function(el){el.onchange=function(){state.warmChecks[el.dataset.warmkey]=el.checked;save()}});
  document.querySelectorAll('#exercises .exercise').forEach(function(card,i){
   var title=card.querySelector('b');if(!title)return;var name=title.textContent,items=specific[name]||['One light acclimation set × 8–12; add another ramp-up set if the load jump is large'];
-  var block='';
-  card.insertAdjacentHTML('beforeend',renderFormGuide(name)+block);
+  var block='<div class="exercise-warmups"><b>Warm-up / ramp-up sets · not logged as working sets</b><p class="small">Use these before the programmed working sets. Percentages are of your planned working weight for that exercise; keep every warm-up easy and crisp, never near failure.</p><ol>'+items.map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ol></div>';
+  card.insertAdjacentHTML('beforeend',block+renderFormGuide(name));
  });
  document.querySelectorAll('[data-warmkey]').forEach(function(el){el.onchange=function(){state.warmChecks[el.dataset.warmkey]=el.checked;save()}});
  document.querySelectorAll('#exercises .setrow').forEach(function(el){el.style.display='none'});
