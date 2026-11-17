@@ -131,6 +131,7 @@ var specific={
 };
 state.warmChecks=state.warmChecks||{};state.recovery=state.recovery||[];state.nutrition=state.nutrition||[];state.activities=state.activities||[];state.waist=state.waist||[];
 function checked(k){return state.warmChecks[k]?'checked':''}
+function sameExerciseLog(log,name){return log.name===name||(name==='Chest-supported machine row'&&log.name==='Chest-supported row')}
 function enhanceWorkout(){
  var key=today()+day, html='<div class="card warm-card"><h3>Daily general warm-up</h3><p class="small">Complete before working sets. These prep steps are checklists only—not logged sets or training volume.</p>';
  (warm[day]||[]).forEach(function(x,i){var k=key+'-g'+i;html+='<label class="warmcheck"><input type="checkbox" data-warmkey="'+k+'" '+checked(k)+'> '+esc(x)+'</label>'});
@@ -147,14 +148,14 @@ function enhanceWorkout(){
  document.querySelectorAll('#exercises .setrow').forEach(function(el){el.style.display='none'});
  document.querySelectorAll('#exercises .log').forEach(function(el){el.style.display='none'});
  document.querySelectorAll('#exercises .exercise').forEach(function(card,i){
-  var name=card.querySelector('b').textContent,ex=days[day].items[i],n=ex[1],last=state.logs.filter(function(l){return l.name===name}).slice(-1)[0];
+  var name=card.querySelector('b').textContent,ex=days[day].items[i],n=ex[1],last=state.logs.filter(function(l){return sameExerciseLog(l,name)}).slice(-1)[0];
   var rows='<div class="worksets"><b>Working sets · logged individually</b>';
-  for(var s=1;s<=n;s++){var prev=state.logs.filter(function(l){return l.name===name}).slice(-n)[s-1];rows+='<div class="setrow-v2"><span>Set '+s+'</span><label>Load<input type="number" step=".5" data-v2load="'+s+'" placeholder="'+(prev?esc(prev.load):'Load')+'"></label><label>Reps<input type="number" min="1" data-v2reps="'+s+'" placeholder="Reps"></label><label>RIR<input type="number" min="0" max="10" data-v2rir="'+s+'" placeholder="RIR"></label><button class="v2save" data-v2set="'+s+'">Save set</button></div>'}
+  for(var s=1;s<=n;s++){var prev=state.logs.filter(function(l){return sameExerciseLog(l,name)}).slice(-n)[s-1];rows+='<div class="setrow-v2"><span>Set '+s+'</span><label>Load<input type="number" step=".5" data-v2load="'+s+'" placeholder="'+(prev?esc(prev.load):'Load')+'"></label><label>Reps<input type="number" min="1" data-v2reps="'+s+'" placeholder="Reps"></label><label>RIR<input type="number" min="0" max="10" data-v2rir="'+s+'" placeholder="RIR"></label><button class="v2save" data-v2set="'+s+'">Save set</button></div>'}
   rows+='</div>';card.insertAdjacentHTML('beforeend',rows);
   card.querySelectorAll('.v2save').forEach(function(btn){btn.onclick=function(){
    var s=+btn.dataset.v2set,load=card.querySelector('[data-v2load="'+s+'"]').value,reps=+card.querySelector('[data-v2reps="'+s+'"]').value,rir=card.querySelector('[data-v2rir="'+s+'"]').value;
    if(load===''||!reps||rir===''||+rir<0||+rir>10){alert('Enter load, reps and RIR for this working set.');return}
-   var old=state.logs.findIndex(function(l){return l.date===today()&&l.day===day&&l.name===name&&l.set===s&&!l.warmup});
+   var old=state.logs.findIndex(function(l){return l.date===today()&&l.day===day&&sameExerciseLog(l,name)&&l.set===s&&!l.warmup});
    var item={date:today(),day:day,name:name,set:s,load:+load,reps:reps,rir:+rir,unit:ex[4],warmup:false};
    if(old>=0)state.logs[old]=item;else state.logs.push(item);save();btn.textContent='Saved';drawProgress();updateVolume();
   }});
