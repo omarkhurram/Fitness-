@@ -164,4 +164,5 @@ function bindExtra(){
 }
 addTabs();addBodyCompAndPRs();$('calTarget').value=state.settings.calorieTarget;$('proTarget').value=state.settings.proteinTarget;bindExtra();drawExtra();updateVolume();
 var oldDrawProgress=drawProgress;drawProgress=function(){oldDrawProgress();updateVolume();drawPersonalRecords()};drawPersonalRecords();
+draw();
 })();
