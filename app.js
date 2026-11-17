@@ -153,7 +153,7 @@ function drawPersonalRecords(){
  html+='</div>';box.appendChild(document.createRange().createContextualFragment(html));
 }
 function updateVolume(){
- var box=$('progressList');if(!box)return;var previous=$('weeklyVolume');if(previous)previous.remove();var groups={Chest:['bench','incline','pec deck'],Back:['row','pull','pulldown'],Shoulders:['lateral','shoulder','reverse'],Arms:['curl','triceps','hammer'],Legs:['squat','deadlift','split','calf'],Abs:['raise','crunch']},html='<div id="weeklyVolume" class="card"><h3>Weekly working-set volume (logged only)</h3>';
+ var box=$('progressList');if(!box)return;var previous=$('weeklyVolume');if(previous)previous.remove();var groups={Chest:['bench','incline','pec deck'],Back:['row','pull','pulldown'],Shoulders:['lateral','shoulder','reverse'],Arms:['curl','triceps','hammer'],Legs:['squat','deadlift','split','calf'],Abs:['raise','crunch'],Traps:['shrug'],Forearms:['farmer carry','hammer curl']},html='<div id="weeklyVolume" class="card"><h3>Weekly working-set volume (logged only)</h3>';
  Object.keys(groups).forEach(function(g){var n=state.logs.filter(function(x){return !x.warmup&&x.date>=week()&&groups[g].some(function(t){return x.name.toLowerCase().indexOf(t)>=0})}).length;html+='<p class="small">'+g+': <b>'+n+' logged sets</b></p>'});html+='</div>';box.insertAdjacentHTML('beforeend',html);
 }
 function bindExtra(){
