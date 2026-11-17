@@ -10,11 +10,11 @@ days.A.items[1][0]='Chest-supported machine row';
 days.C.items[3][0]='Incline DB curl (hammer up, supinated down)';
 days.T.items.push(['Farmer carry',2,30,45,'seconds']);
 var warm={
- A:['3–5 min easy walk, bike or row','Arm circles: 10 each direction','Scapular push-ups: 8–10','Light band pull-aparts: 10–15'],
- B:['3–5 min easy walk, bike or row','Arm circles: 10 each direction','Scapular push-ups: 8–10','Light band pull-aparts: 10–15'],
- L:['3–4 min easy bike or treadmill','Ankle rocks: 10 each side','Leg swings: 10 forward/back + 10 lateral per leg','Bodyweight squats: 8','Reverse lunges: 6 each leg','Easy low pogos: 2 × 10','Progressive practice jumps: 60%, 75%, 85%'],
- C:['3–5 min easy walk, bike or row','Arm circles: 10 each direction','Scapular push-ups: 8–10','Light band pull-aparts: 10–15'],
- T:['2–3 min easy movement','Shoulder circles: 10 each way','Wrist circles and gentle forearm opening/closing: 10 each']
+ A:['3–5 min easy treadmill walk, bike or row','Shoulder CARs: 5 slow circles each direction','Band external rotations: 10 each side, elbow tucked','Scapular push-ups: 8–10','Light band pull-aparts: 12–15','Empty-bar bench press: 10 smooth reps'],
+ B:['3–5 min easy walk, bike or row','Thoracic rotations: 6 each side','Scapular pull-ups or active hangs: 6–8 controlled reps','Light band rows: 12–15','Band external rotations: 10 each side','Very light lat pulldown: 10 smooth reps'],
+ L:['3–4 min easy bike or treadmill','Ankle rocks: 10 each side','Leg swings: 10 forward/back + 10 lateral per leg','Walking lunges: 6 each leg','Bodyweight squats: 8 controlled reps','Low pogos: 2 × 10, springy contacts','Snap-down landing practice: 3 reps','Progressive practice jumps: 60%, 75%, 85% effort'],
+ C:['3–5 min easy treadmill walk, bike or row','Shoulder circles: 10 each direction','Wall slides: 8–10 smooth reps','Band pull-aparts: 12–15','Scapular push-ups: 8','Very light push-ups or Smith-bar presses: 8 easy reps','Wrist flexion/extension and forearm rotations: 8 each'],
+ T:['2–3 min easy movement','Shoulder CARs: 5 each direction','Light cable or band lateral raises: 10 easy reps','Light reverse-fly/band pull-aparts: 12 reps','Scapular shrugs: 8 controlled reps','Dead bug: 6 each side, slow and controlled']
 };
 
 var formGuides={
@@ -133,7 +133,7 @@ state.warmChecks=state.warmChecks||{};state.recovery=state.recovery||[];state.nu
 function checked(k){return state.warmChecks[k]?'checked':''}
 function sameExerciseLog(log,name){return log.name===name||(name==='Chest-supported machine row'&&log.name==='Chest-supported row')}
 function enhanceWorkout(){
- var key=today()+day, html='<div class="card warm-card"><h3>Daily general warm-up</h3><p class="small">Complete before working sets. These prep steps are checklists only—not logged sets or training volume.</p>';
+ var key=today()+day, html='<div class="card warm-card"><h3>Day-specific warm-up</h3><p class="small">Complete before working sets. These prep steps are checklists only—not logged sets or training volume.</p>';
  (warm[day]||[]).forEach(function(x,i){var k=key+'-g'+i;html+='<label class="warmcheck"><input type="checkbox" data-warmkey="'+k+'" '+checked(k)+'> '+esc(x)+'</label>'});
  html+='</div>'; $('exercises').insertAdjacentHTML('afterbegin',html);
  document.querySelectorAll('[data-warmkey]').forEach(function(el){el.onchange=function(){state.warmChecks[el.dataset.warmkey]=el.checked;save()}});
