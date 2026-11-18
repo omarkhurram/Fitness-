@@ -1,4 +1,4 @@
-const CACHE="training-hq-v23";
+const CACHE="training-hq-v24";
 const ASSETS=["./","./index.html","./manifest.webmanifest","./icon.svg","./app.js","./cloud-sync.js"];
 self.addEventListener("install",e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS))));
 self.addEventListener("activate",e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k))))));
